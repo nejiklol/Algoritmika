@@ -1,6 +1,6 @@
 import time
 import random
-from plotter import Plotter
+import matplotlib.pyplot as plt
 
 # This functions remove dublicate values from arrays 
 
@@ -43,7 +43,8 @@ def delDub(array):
 
 
     
-# Second one works faster as i think because of "try except" block
+# Second one works slower as i think because in "delDub" the algorithm calls the array "memory",
+# after removing elements from the main array
 # below are the tests and checking the running time of the functions
 def testTime(func):
     funcArrayTest = []
@@ -58,25 +59,21 @@ def testTime(func):
         x.append(n)
         Time.append(endTimer)
         funcName = func.__name__
-        print(funcName ,'test with', n , "=== %s seconds ===" % endTimer)
-    return [x,Time]
+    return [x,Time,funcName]
     
 
 a = testTime(newDel)
 b = testTime(delDub)
 
-to_plot =[{
-"title": 'func1',
-"type": "plot",
-"data": [a[0],a[1]]
-},
-{
-"title": 'func2',
-"type": "plot",
-"data": [b[0],b[1]]
-}]
+# Diagram shows that first is more optimal than "newDel" much slower than "delDub"
+fig=plt.figure()
+fig.show()
+ax=fig.add_subplot(111)
+ax.plot(a[0],a[1],c='b',marker="^",ls='--',label=a[2],fillstyle='none')
+ax.plot(b[0],b[1],c='g',marker=(8,2,0),ls='--',label=b[2])
 
-pl = Plotter(to_plot)
-pl.show()
+plt.legend(loc=2)
+plt.draw()
+
 
 
