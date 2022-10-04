@@ -1,7 +1,9 @@
 import time
-# Данный вариант реализации создает внутри функции новый массив
-# Первоначальный очищается , и каждый оригинальный 
-# элемент добавляется в новый массив
+import random
+from plotter import Plotter
+
+# This functions remove dublicate values from arrays 
+
 def newDel(array):
     newArray = []
     count = 0
@@ -20,8 +22,7 @@ def newDel(array):
             
             
     return newArray
-# Во втором случае, массив очищается от дубликатов 
-# каждого последующего элемента
+
 
 def delDub(array):
     
@@ -37,24 +38,36 @@ def delDub(array):
         count = memory[1]+1
         if count==len(array):
             break
-        memory[0] = array[count]
-        memory[1] = count
+        memory = [array[count],count]
     return array
 
 
-# После проверки двух методов я заметил, что первый работает значительно дольше
-# поскольку принцип очищения у обоих функций схож, я предполагаю, что дело в
-# обработчике исключений в первом варианте
-a = []
-b = []
-array=[{"key1": "value1"}, {"k1": "v1", "k2": "v2", "k3": "v3"}, {}, {}, {"key1": "value1"}, {"key1": "value1"}, {"key2": "value2"}]
-for i in range(10000):
-    for j in array:
-        a.append(j)
-        b.append(j)
-start_time = time.time()
-print(newDel(a))
-print("--- %s seconds ---" % (time.time() - start_time))
-start_time = time.time()
-print(delDub(b))
-print("--- %s seconds ---" % (time.time() - start_time))
+    
+# Second one works faster as i think because of "try except" block
+# below are the tests and checking the running time of the functions
+def testTime(func):
+    a = []
+    testArray = []
+    for n in range(1000,30000,2000): 
+        for i in range(n):
+            a.append(random.randint(0,n))
+        start_time = time.time()
+        a = func(a)
+        testArray.append(a,n)
+        funcName = func.__name__
+        print(funcName ,'test with', n , "=== %s seconds ===" % (time.time() - start_time))
+        
+    to_plot = [{
+    "title": funcName,
+    "type": "plot",
+    "data": [testArray[0], testArray[1]]
+    }]
+
+    pl = Plotter(to_plot)
+    pl.show()
+    
+
+testTime(newDel)
+testTime(delDub)
+
+
