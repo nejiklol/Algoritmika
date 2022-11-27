@@ -12,13 +12,11 @@ def newDel(array):
     while array!=[]:                 
         delete = array[count]        
         newArray.append(array[count])
-        TF = True
         
-        while TF:                    
-            try:                     
-                array.remove(delete)
-            except:
-                TF = False
+        
+        while delete in array:
+            array.remove(delete)
+            
             
             
     return newArray
@@ -50,7 +48,7 @@ def testTime(func):
     funcArrayTest = []
     Time = []
     x = []
-    for n in range(1000,15000,2000): 
+    for n in range(1000,15000,7000): 
         for i in range(n):
             funcArrayTest.append(random.randint(0,n))
         start_time = time.time()
