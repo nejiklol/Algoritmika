@@ -6,20 +6,10 @@ import matplotlib.pyplot as plt
 
 def newDel(array):
     newArray = []
-    count = 0
-
     
-    while array!=[]:                 
-        delete = array[count]        
-        newArray.append(array[count])
-        TF = True
-        
-        while TF:                    
-            try:                     
-                array.remove(delete)
-            except:
-                TF = False
-            
+    for i in array:
+        if i not in newArray:
+            newArray.append(i)
             
     return newArray
 
