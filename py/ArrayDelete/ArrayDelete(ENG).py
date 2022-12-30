@@ -11,7 +11,7 @@ def newDel(array):
     
     while array!=[]:                 
         delete = array[count]        
-        newArray.append(array[count])
+        newArray.append(delete)
         
         
         while delete in array:
